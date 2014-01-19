@@ -158,6 +158,7 @@ class VPreLex {
     static VPreLex* s_currentLexp;	///< Current lexing point
     int		m_keepComments;		///< Emit comments in output text
     int		m_keepWhitespace;	///< Emit all whitespace in output text
+    int     m_multilineStrings;  ///< Allow newlines in strings
     bool	m_pedantic;	///< Obey standard; don't Substitute `error
     bool	m_synthesis;	///< Remove translate_offs
 
@@ -174,6 +175,7 @@ class VPreLex {
 	m_streamDepth = 0;
 	m_keepComments = 0;
 	m_keepWhitespace = 1;
+	m_multilineStrings = 0;
 	m_pedantic = false;
 	m_synthesis = false;
 	m_formalLevel = 0;

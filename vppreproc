@@ -47,6 +47,7 @@ if (! GetOptions (
 		  "dump-defines!" => \$opt_dump_defines,
 		  "line!"	=> sub { push @opt_pp_flags, (line_directives=>$_[1]); },
 		  "pedantic!"	=> sub { push @opt_pp_flags, (pedantic=>$_[1]); },
+		  "mlstring!"   => sub { push @opt_pp_flags, (multilineStrings=>$_[1]); },
 		  "simple!"	=> sub { if ($_[1]) {
 		      push @opt_pp_flags, (keep_comments=>0,
 					   line_directives=>0,
@@ -219,6 +220,10 @@ Remove `line directives.
 Rigorously obey the Verilog spec.  This disables the `error feature, and
 may disable other features that are not specified in the approved language
 reference manual. Defaults false.
+
+=item --mlstring
+
+Allow unescaped newlines in string literals.
 
 =item --simple
 

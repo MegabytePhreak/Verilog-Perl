@@ -52,6 +52,7 @@ public:
 private:
     int		m_keepComments;
     int		m_keepWhitespace;
+    int     m_multilineStrings;
     bool	m_lineDirectives;
     bool	m_pedantic;
     bool	m_synthesis;
@@ -87,6 +88,8 @@ public:
     void keepComments(int flag) { m_keepComments=flag; }	// Return comments, 0=no, 1=yes, 2=callback
     int  keepWhitespace() { return m_keepWhitespace; }
     void keepWhitespace(int flag) { m_keepWhitespace=flag; }	// Return extra whitespace
+    int  multilineStrings() { return m_multilineStrings; }
+    void multilineStrings(int flag) { m_multilineStrings=flag; }    // Allow newlines in string literals
     bool lineDirectives() { return m_lineDirectives; }
     void lineDirectives(bool flag) { m_lineDirectives=flag; }	// Insert `line directives
     bool pedantic() { return m_pedantic; }

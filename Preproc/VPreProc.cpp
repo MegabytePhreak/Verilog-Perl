@@ -170,6 +170,7 @@ struct VPreProcImp : public VPreProcOpaque {
 	m_lexp = new VPreLex (this, filelinep);
 	m_lexp->m_keepComments = m_preprocp->keepComments();
 	m_lexp->m_keepWhitespace = m_preprocp->keepWhitespace();
+    m_lexp->m_multilineStrings = m_preprocp->multilineStrings();
 	m_lexp->m_pedantic = m_preprocp->pedantic();
 	m_lexp->m_synthesis = m_preprocp->synthesis();
 	m_lexp->debug(debug()>=10 ? debug() : 0);  // See also VPreProc::debug() method
@@ -234,6 +235,7 @@ VPreProc::VPreProc() {
     // Below overridden by configure()
     m_keepComments = true;
     m_keepWhitespace = true;
+    m_multilineStrings = false;
     m_lineDirectives = true;
     m_pedantic = false;
     m_synthesis = false;

@@ -19,7 +19,7 @@ $VERSION = '3.402';
 bootstrap Verilog::Preproc;
 
 #In Preproc.xs:
-# sub _new (class, keepcmt, linedir, pedantic, synthesis)
+# sub _new (class, keepcmt, linedir, pedantic, synthesis, multilineStrings)
 # sub _open (class)
 # sub getall (class)
 # sub getline (class)
@@ -39,6 +39,7 @@ sub new {
 		ieee_predefined=>1,
 		pedantic=>0,
 		synthesis=>0,
+		multilineStrings=>0,
 		options=>Verilog::Getopt->new(),	# If the user didn't give one, still work!
 		#include_open_nonfatal=>0,
 		@_};
@@ -52,6 +53,7 @@ sub new {
 		$self->{line_directives},
 		$self->{pedantic},
 		$self->{synthesis},
+		$self->{multilineStrings}
 		);
     if ($self->{synthesis}) {
 	# Fourth argument 1 for cmdline - no `undefineall effect
@@ -350,6 +352,10 @@ With synthesis set, define SYNTHESIS, and ignore text bewteen "ambit",
 comments.  Note using metacomments is discouraged as they have led to
 silicon bugs (versus ifdef SYNTHESIS); see
 L<http://www.veripool.org/papers/TenIPEdits_SNUGBos07_paper.pdf>.
+
+=item multilineStrings=>1
+
+With multilineStrings set, allow unescaped newlines in string literals. 
 
 =back
 

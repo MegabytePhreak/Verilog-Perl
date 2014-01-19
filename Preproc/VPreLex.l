@@ -45,6 +45,7 @@ VPreLex* VPreLex::s_currentLexp = NULL;	// Current lexing point
 #define linenoInc()  { LEXP->linenoInc(); }
 static bool pedantic() { return LEXP->m_pedantic; }
 static bool keepWhitespace() { return LEXP->m_keepWhitespace; }
+static bool multilineStrings() { return LEXP->m_multilineStrings; }
 static void appendDefValue(const char* t, size_t l) { LEXP->appendDefValue(t,l); }
 void yyerror(char* msg) { LEXP->curFilelinep()->error(msg); }
 
@@ -137,7 +138,17 @@ prag_trans_on	({ws}*{pragma_tools}{ws}+{translate_on}{ws}*)
 	/* Pass-through strings */
 <INITIAL>{quote}	{ yy_push_state(STRMODE); yymore(); }
 <STRMODE><<EOF>>	{ linenoInc(); yyerrorf("EOF in unterminated string"); yyleng=0; yyterminate(); }
-<STRMODE>{crnl}		{ linenoInc(); yyerrorf("Unterminated string"); BEGIN(INITIAL); }
+<STRMODE>{crnl}		{   
+    linenoInc(); 
+    if( !multilineStrings() ){
+        yyerrorf("Unterminated string");
+        BEGIN(INITIAL);
+    }
+    else
+    {
+        yymore();
+    }
+}
 <STRMODE>{word}		{ yymore(); }
 <STRMODE>[^\"\\]	{ yymore(); }
 <STRMODE>{backslash}{crnl}	{ linenoInc(); yymore(); }
